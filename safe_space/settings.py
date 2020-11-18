@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'accounts',
     'Ask_the_doctor',
+    'community_forum',
 ]
 
 MIDDLEWARE = [
