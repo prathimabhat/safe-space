@@ -1,0 +1,31 @@
+{% block content %}
+{% include 'ask_the_doctor/base.html' %}
+
+{% if category %}
+<style type="text/css">
+	body{
+		background-color: #EEEEE0;
+	}
+	.cats{
+		background-color: white;
+	}
+</style>
+<br><br>
+<div class="container cats">
+	<h3>{{category}}</h3><hr><br>
+	<div class="row">
+		
+
+		{% for question in category_questions %}
+			<br>
+			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				<a href="/community_forum/questions/{{question.id}}/">{{question.question_title}}</a><br><br>
+			</div>
+			
+		{% endfor %}
+	</div>
+{% else %}
+Sorry this page does not exist
+{% endif %}
+{% endblock %}
+</div>

@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',include('accounts.urls')),
     path('ask_the_doctor/',include('Ask_the_doctor.urls')),
+    path('community_forum/',include('community_forum.urls')),
 ]

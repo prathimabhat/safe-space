@@ -1,0 +1,56 @@
+{% extends 'ask_the_doctor/base.html' %}
+{% block content %}
+
+<style type="text/css">
+	body{
+		background-color: #EEEEE0;
+	}
+
+	}
+
+</style>
+<br><br>
+<div class="container" style="background-color:white;">
+	<div class="row">
+
+		
+		{% for question in question %}
+		
+	    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+	    	<span style="font-weight: bolder;">{{question.question_title|safe}}</span><br><br>
+	    	{{question.question_detail|safe}}<br>
+	    	<span style="color: blue;">{{question.user.user_name}}</span><br>
+	    	<span style="font-size: 0.9rem;color: grey;">{{question.date}}</span>
+
+	    </div>
+
+	    {% endfor %}
+
+	    <br>
+	</div>
+	<hr>
+	<br>
+	<div class="row">
+	   
+	    {% for answers in answers %}
+	    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+	    	<p>{{answers.answer|safe}}</p><br>
+	    	<span style="color: blue;">{{answers.user.user_name}}</span><br>
+	    	<span style="font-size: 0.9rem;color: grey;">{{answers.date}}</span><br><hr>
+	    </div>
+	    {% endfor %}
+	    
+	</div>
+</div>
+
+<br>
+<div class="container">
+	<span style="color: blue;font-weight: bolder;">Answer this question</span>
+	<div class="row">
+		
+
+	</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% block content %}
+{% include 'ask_the_doctor/base.html' %}
+
+<style type="text/css">
+	body{
+		background-color: #EEEEE0;
+	}
+
+
+</style>
+
+<br><br>
+<div class="container">
+	<p style="color:red;font-weight: bold;">Dear user, please ask your questions in the forum which is relavent to your question. If you are not sure about which category your question falls into, ask the question in 'Others' forum.</p>
+</div>
+
+<div class="container" style="background-color:white;">
+
+	<div class="row">
+		{% for category in categories%}
+		
+	    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+	    	<span style="font-weight: bolder;"><br><a href="/community_forum/{{category.category_name}}/">{{category.category_name|safe}}</a><br></span>
+	    </div>
+	    {% endfor %}
+	    <br>
+	</div>
+</div>
+
+
+{% endblock %}
