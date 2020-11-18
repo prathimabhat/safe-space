@@ -1,0 +1,46 @@
+{% extends 'ask_the_doctor/base.html' %}
+{% block content %}
+
+<style type="text/css">
+	body{
+		background-color: #EEEEE0;
+	}
+
+	}
+
+</style>
+<br><br>
+<div class="container" style="background-color:white;">
+	<div class="row">
+
+		
+		{% for question in question %}
+		
+	    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+	    	<span style="font-weight: bolder;">{{question.question|safe}}</span><br>
+	    	{{question.user}}<br>
+	    	{{question.date}}<hr>
+
+	    </div>
+	    {% endfor %}
+	    <br>
+	</div>
+	<br>
+	<div class="row">
+	   
+	    {% for answers in answers %}
+	    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+	    	<p>{{answers.answer|safe}}</p><br>
+	    	{{answers.therapist}}<br>
+	    	{{answers.date}}<br><hr>
+	    </div>
+	    {% endfor %}
+	    
+	</div>
+</div>
+
+
+
+
+
+{% endblock %}

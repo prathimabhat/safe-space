@@ -1,0 +1,12 @@
+
+{% block content %}
+{% include 'Ask_the_doctor/base.html'%}
+
+
+
+	  <h2>Welcome, {{ user.username }}!</h2>
+	  <p>Your birth date: {{ user.profile.date_of_birth}}</p>
+
+	
+
+{% endblock %}
