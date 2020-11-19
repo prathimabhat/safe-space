@@ -50,7 +50,7 @@
             <a class="nav-link" href="/accounts/home/">Home <span class="sr-only">(current)</span></a>
           </li>
 
-          {% if user.is_authenticated %}
+          {% if request.user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="/ask_the_doctor/">Ask the Doctor</a>
             </li>
@@ -70,7 +70,7 @@
             <a class="nav-link" href="/community_forum/">Community Forum</a>
           </li>
 
-          {% if user.is_authenticated %}
+          {% if request.user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="#">Chats</a>
             </li>
@@ -88,27 +88,27 @@
 
 
 
-          {% if user.is_authenticated %}
+          {% if request.user.is_authenticated %}
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{user.username}}
+                {{request.user.username}}
               </a>
 
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">My Questions</a>
-                <a class="dropdown-item" href="#">My Answers</a>
-                <a class="dropdown-item" href="#">Profile</a>
+                <a class="dropdown-item" href="/my_questions">My Questions</a>
+                <a class="dropdown-item" href="/my_answers/">My Answers</a>
+                <a class="dropdown-item" href="/profile/">Profile</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/accounts/logout/">Logout</a>
               </div>
             </li>
 
-          {% endif %}
+     
 
-          {% if user.is_authenticated %}
+     
 
-          {%else%}
+          {% else %}
             <li class="nav-item">
               <a class="nav-link btn" href="/accounts/login/" style="background-color:#D2691E;color:white !important;height: 2.5rem;width: 6rem;">Login</a>
             </li>

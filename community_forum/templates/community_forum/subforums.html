@@ -1,7 +1,5 @@
 {% block content %}
 {% include 'ask_the_doctor/base.html' %}
-
-{% if category %}
 <style type="text/css">
 	body{
 		background-color: #EEEEE0;
@@ -10,22 +8,47 @@
 		background-color: white;
 	}
 </style>
+{% if category %}
 <br><br>
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+			<h3>{{category}}</h3>
+		</div>
+		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+			<span style="font-weight: bolder;font-size: 1.5rem;"><a href="/community_forum/{{category}}/questions/new/">Ask a question</a></span>
+
+		</div>
+			
+	</div>
+	<hr><br>
+</div>
+
+<br><br>
+
 <div class="container cats">
-	<h3>{{category}}</h3><hr><br>
+	<br>
 	<div class="row">
 		
-
 		{% for question in category_questions %}
 			<br>
-			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<a href="/community_forum/questions/{{question.id}}/">{{question.question_title}}</a><br><br>
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<a href="/community_forum/{{category}}/questions/{{question.id}}/">{{question.question_title}}</a><br><br>
 			</div>
 			
+			{% empty %}
+			<div class="container" style="text-align: center;">
+				<p>Sorry! There are no questions in this forum</p>
+			</div>
+
 		{% endfor %}
+
+		</div>
 	</div>
+			
 {% else %}
 Sorry this page does not exist
 {% endif %}
+
 {% endblock %}
-</div>

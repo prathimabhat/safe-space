@@ -5,6 +5,8 @@ app_name="community_forum"
 urlpatterns=[
 	path('',views.CategoryView.as_view()),
 	path('<str:category>/',views.SubforumView),
-	path('questions/<int:pk>/',views.QuestionView.as_view()),
+	path('<str:category>/questions/new/',views.NewQuestionView.as_view()),
+	path('<str:category>/questions/<int:pk>/',views.QuestionView.as_view()),
+	path('<str:category>/questions/<int:pk>/answer/',views.AnswerView.as_view()),
 
 ]

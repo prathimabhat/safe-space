@@ -6,25 +6,35 @@
 		background-color: #EEEEE0;
 	}
 
-	}
 
 </style>
 <br><br>
+
+<div class="container" style="font-weight: bolder;font-size: 2rem;">
+{% for cat in category %}
+	<p>{{cat.category_name|safe}}</p>
+	
+</div>
 <div class="container" style="background-color:white;">
 	<div class="row">
-
+	
 		
 		{% for question in question %}
-		
 	    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 	    	<span style="font-weight: bolder;">{{question.question_title|safe}}</span><br><br>
 	    	{{question.question_detail|safe}}<br>
 	    	<span style="color: blue;">{{question.user.user_name}}</span><br>
-	    	<span style="font-size: 0.9rem;color: grey;">{{question.date}}</span>
+	    	<span style="font-size: 0.9rem;color: grey;">{{question.date}}</span><br><br>
 
 	    </div>
 
+	    <div class="container">
+			<span style="font-weight: bold;"><a href="/community_forum/{{cat.category_name}}/questions/{{question.id}}/answer/">Answer this question!</a></span>
+		</div>
+
+		
 	    {% endfor %}
+{% endfor %}
 
 	    <br>
 	</div>
@@ -38,19 +48,13 @@
 	    	<span style="color: blue;">{{answers.user.user_name}}</span><br>
 	    	<span style="font-size: 0.9rem;color: grey;">{{answers.date}}</span><br><hr>
 	    </div>
+
+	    
 	    {% endfor %}
 	    
 	</div>
 </div>
 
 <br>
-<div class="container">
-	<span style="color: blue;font-weight: bolder;">Answer this question</span>
-	<div class="row">
-		
-
-	</div>
-</div>
-
 
 {% endblock %}

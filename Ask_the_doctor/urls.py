@@ -8,4 +8,5 @@ urlpatterns=[
 	path('my_questions/<int:pk>/',views.MyQuestions.as_view()),
 
 
+
 ]

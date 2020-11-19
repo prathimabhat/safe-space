@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'Ask_the_doctor',
     'community_forum',
+    'user_profile',
 ]
 
 MIDDLEWARE = [

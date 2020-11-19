@@ -2,9 +2,11 @@ from django.shortcuts import render
 from community_forum.models import Categories
 from django.http import HttpResponse,HttpResponseRedirect
 from django.views import View
+from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from .forms import AnswerForm
+from .forms import AnswerForm,QuestionForm
 from community_forum.models import Questions,Answers,Comments,QuestionVotes,AnswerVotes
 # Create your views here.
 class CategoryView(View):
@@ -36,17 +38,47 @@ class QuestionView(View):
 		question_id=kwargs['pk']
 		question=Questions.objects.filter(id=question_id)
 		answers=Answers.objects.filter(question=question_id)
+		category=Categories.objects.filter(category_name=kwargs['category'])
 		context={
 			'question':question,
-			'answers':answers
+			'answers':answers,
+			'category':category
 		}
 		return render(request,'community_forum/questions.html',context)
 
-class AnswerView(View,LoginRequiredMixin):
-	def post(self,request,*args,**kwargs):
-		answerform=AnswerForm(request.POST)
-		if answerform.is_valid():
-			answer = answerform.save(commit=False)
-			answer.user = request.user.profile
-			answer.question=Questions.objects.filter(id=kwargs['pk'])
-			answer=answerform.cleaned_data.get('answer')
+
+class AnswerView(CreateView,LoginRequiredMixin):
+
+	model=Answers
+	form_class=AnswerForm
+	success_url='/community_forum/'
+	
+	def form_valid(self,form):
+		
+		category_=get_object_or_404(Categories,category_name=self.kwargs['category'])
+		question_=get_object_or_404(Questions,pk=self.kwargs['pk'])
+		
+		obj=form.save(commit=False)
+		obj.user=self.request.user.profile
+		obj.category=category_
+		obj.question=question_
+		obj.save()
+		return super().form_valid(form)
+		#return self.render_to_response(self.get_context_data(form=form))
+		
+
+class NewQuestionView(CreateView,LoginRequiredMixin):
+
+	model=Questions
+	form_class=QuestionForm
+	success_url='/community_forum/'
+	
+	def form_valid(self,form):
+		
+		category_=get_object_or_404(Categories,category_name=self.kwargs['category'])
+		obj=form.save(commit=False)
+		obj.user=self.request.user.profile
+		obj.category=category_
+		obj.save()
+		return super().form_valid(form)
+	
