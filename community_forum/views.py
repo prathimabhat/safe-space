@@ -40,7 +40,7 @@ class QuestionView(View):
 
 	def get(self,request,*args,**kwargs):
 		question_id=kwargs['pk']
-		question=Questions.objects.filter(id=question_id)
+		question=get_object_or_404(Questions,id=question_id)
 		answers=Answers.objects.filter(question=question_id)
 		#category=Categories.objects.filter(category_name=kwargs['category'])
 		context={

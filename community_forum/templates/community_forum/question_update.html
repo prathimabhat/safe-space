@@ -21,6 +21,10 @@
 		color: blue;
 
 	}
+	.re{
+		background-color: none;
+		border: none;
+	}
 
 </style>
 <br><br>
@@ -37,7 +41,9 @@
 							{{ form.text | safe }}
 							{{ form.media }}
 							{{form.as_p}}
-							&nbsp;<a href="/"><i class="fas fa-microphone mic"></i></a><br><br>
+							&nbsp;<button type="button" onclick="record1()" class="re"><i class="fas fa-microphone mic"></i></button>
+							<p id="instructions">Press the mic to speak</p>
+							<br><br><br><br>
 							<input type="submit" class="btn btn-primary" name="Submit">
 							
 						</form>
@@ -49,5 +55,46 @@
 
 	</div>
 </div>
+
+<script type="text/javascript">
+
+		var speechRecognition=window.webkitSpeechRecognition
+		var recognition=new speechRecognition()
+		var textbox=$("#id_question_detail")
+		var instructions=$("#instructions")
+		var content=''
+		recognition.continuous=true
+
+		recognition.onstart=function(){
+			instructions.text("Voice recognition is on")
+		}
+
+		recognition.onspeechend=function(){
+			instructions.text("No activity")
+		}
+		recognition.onerror=function(){
+			instructions.text("Try again")
+		}
+
+		recognition.onresult=function(event){
+			var current=event.resultIndex;
+			var transcript=event.results[current][0].transcript;
+			console.log(transcript);
+			content+=transcript
+			CKEDITOR.instances.id_question_detail.setData(content)
+		}
+
+		function record1(event){
+			if(content.length){
+				content+=''
+			}
+			recognition.start();
+		}
+		textbox.on('input',function(){
+			content=$(this).val()
+		})
+
+	
+</script>
 
 {% endblock %}

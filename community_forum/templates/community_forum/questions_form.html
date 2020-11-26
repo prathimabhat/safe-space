@@ -46,14 +46,17 @@
 									{{form.question_title}}
 								</p>
 								<br><br>
-								<button onclick="record1()" class="re"><i class="fas fa-microphone mic"></i></button><br><br>
+								
 								{{form.question_detail.label}}<br><br>
 								<p id="detail_text">
 									{{form.question_detail}}
 								</p>
 								<br><br>
 							
-							&nbsp;<button onclick="record2()" class="re"><i class="fas fa-microphone mic"></i></button><br><br>
+							<button type="button" onclick="record1()" class="re"><i class="fas fa-microphone mic"></i></button>
+							<p id="instructions">Press the mic to speak</p>
+							<br><br>
+
 							<input type="submit" class="btn btn-primary" name="Submit">
 							
 						</form>
@@ -67,28 +70,45 @@
 </div>
 
 <script type="text/javascript">
-	function record1(){
-		var recognition= new webkitSpeechRecognition();
-		recognition.lang="en-IN";
-		recognition.onresult=function(event){
-			console.log(event);
-			document.getElementById('title_text').value=event.results[0][0].transcript;
-		}
-		recognition.start();
-	}
 
-	function record2(){
-		var recognition= new webkitSpeechRecognition();
-		recognition.lang="en-IN";
-		recognition.onresult=function(event){
-			console.log(event);
-			document.getElementById('detail_text').value=event.results[0][0].transcript;
-		}
-		recognition.start();
-	}
+		var speechRecognition=window.webkitSpeechRecognition
+		var recognition=new speechRecognition()
+		var textbox=$("#id_question_detail")
+		var instructions=$("#instructions")
+		var content=''
+		recognition.continuous=true
 
+		recognition.onstart=function(){
+			instructions.text("Voice recognition is on")
+		}
+
+		recognition.onspeechend=function(){
+			instructions.text("No activity")
+		}
+		recognition.onerror=function(){
+			instructions.text("Try again")
+		}
+
+		recognition.onresult=function(event){
+			var current=event.resultIndex;
+			var transcript=event.results[current][0].transcript;
+			console.log(transcript);
+			content+=transcript
+			CKEDITOR.instances.id_question_detail.setData(content)
+		}
+
+		function record1(event){
+			if(content.length){
+				content+=''
+			}
+			recognition.start();
+		}
+		textbox.on('input',function(){
+			content=$(this).val()
+		})
+
+	
 </script>
-
  
 
 {% endblock %}
