@@ -22,4 +22,5 @@ urlpatterns = [
     path('ask_the_doctor/',include('Ask_the_doctor.urls')),
     path('community_forum/',include('community_forum.urls')),
     path('profile/',include('user_profile.urls')),
+    path('therapist_dashboard/',include('therapist_dashboard.urls')),
 ]

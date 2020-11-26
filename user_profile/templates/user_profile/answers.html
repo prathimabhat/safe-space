@@ -15,12 +15,20 @@ body{
 		{% for answer in answers %}
 			<br>
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<a href="/community_forum/{{category}}/questions/{{question.id}}/">{{question.question_title}}</a><br><br>
+				<b>{{answer.question.question_title|safe}}</b><br><br>
+				{{answer.question.question_detail|safe}}<br>
+				<small>Question in {{answer.question.category.category_name}}</small><br><br>
+				<b><p>You answered:</p></b>
+				{{answer.answer|safe}}
+				<br>
+				<a href="/profile/my_answers/{{answer.id}}/edit/">Edit this answer?</a>
+
+				<br><hr>
 			</div>
 			
 			{% empty %}
 			<div class="container" style="text-align: center;">
-				<p>Sorry! There are no questions in this forum</p>
+				<p>Ypu have not answered any questions</p>
 			</div>
 
 		{% endfor %}

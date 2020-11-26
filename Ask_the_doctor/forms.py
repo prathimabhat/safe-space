@@ -15,3 +15,8 @@ class QuestionForm(forms.ModelForm):
 	    	}'''
 
    
+class QuestionUpdateForm(forms.ModelForm):
+	question=forms.CharField(widget=CKEditorWidget(attrs={'class':'form-control','placeholder':'Type here'}))
+	class Meta:
+		model=question_to_therapist
+		fields=['question']

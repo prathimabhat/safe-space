@@ -1,6 +1,6 @@
-{% extends 'ask_the_doctor/base.html' %}
-{% block content %}
 
+{% block content %}
+{% include 'ask_the_doctor/base.html' %}
 <style type="text/css">
 	body{
 		background-color: #EEEEE0;
@@ -21,6 +21,10 @@
 		color: blue;
 
 	}
+	.re{
+		background-color: none;
+		border: none;
+	}
 
 </style>
 <br><br>
@@ -34,10 +38,22 @@
 						<form method="POST">
 							
 							{% csrf_token %}
-							{{ form.text | safe }}
-							{{ form.media }}
-							{{form.as_p}}
-							&nbsp;<a href="/"><i class="fas fa-microphone mic"></i></a><br><br>
+							
+								{{ form.text | safe }}
+								{{ form.media }}
+								{{form.question_title.label}}<br><br>
+								<p id="title_text">
+									{{form.question_title}}
+								</p>
+								<br><br>
+								<button onclick="record1()" class="re"><i class="fas fa-microphone mic"></i></button><br><br>
+								{{form.question_detail.label}}<br><br>
+								<p id="detail_text">
+									{{form.question_detail}}
+								</p>
+								<br><br>
+							
+							&nbsp;<button onclick="record2()" class="re"><i class="fas fa-microphone mic"></i></button><br><br>
 							<input type="submit" class="btn btn-primary" name="Submit">
 							
 						</form>
@@ -49,5 +65,30 @@
 
 	</div>
 </div>
+
+<script type="text/javascript">
+	function record1(){
+		var recognition= new webkitSpeechRecognition();
+		recognition.lang="en-IN";
+		recognition.onresult=function(event){
+			console.log(event);
+			document.getElementById('title_text').value=event.results[0][0].transcript;
+		}
+		recognition.start();
+	}
+
+	function record2(){
+		var recognition= new webkitSpeechRecognition();
+		recognition.lang="en-IN";
+		recognition.onresult=function(event){
+			console.log(event);
+			document.getElementById('detail_text').value=event.results[0][0].transcript;
+		}
+		recognition.start();
+	}
+
+</script>
+
+ 
 
 {% endblock %}

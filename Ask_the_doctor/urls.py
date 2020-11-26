@@ -6,6 +6,7 @@ urlpatterns=[
 	path('',views.TherapistView.as_view()),
 	path('ask/<int:pk>/',views.NewQuestionView.as_view()),
 	path('my_questions/<int:pk>/',views.MyQuestions.as_view()),
+	path('my_questions/<int:pk>/edit/',views.QuestionUpdateView),
 
 
 

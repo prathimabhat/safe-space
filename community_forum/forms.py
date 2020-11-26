@@ -18,3 +18,13 @@ class QuestionForm(forms.ModelForm):
 	class Meta:
 		model=Questions
 		fields=['question_title','question_detail']
+
+class AnswerUpdateForm(forms.ModelForm):
+	answer=forms.CharField(widget=CKEditorWidget(attrs={'class':'form-control','placeholder':'Type here'}))
+	class Meta:
+		model=Answers
+		fields=['answer']
+
+
+
+

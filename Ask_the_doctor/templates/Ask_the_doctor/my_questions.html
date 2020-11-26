@@ -16,11 +16,14 @@
 		
 		{% for question in question %}
 		
-	    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+	    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
 	    	<span style="font-weight: bolder;">{{question.question|safe}}</span><br>
 	    	{{question.user}}<br>
 	    	{{question.date}}<hr>
 
+	    </div>
+	    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+	    	<br><br><b><a href="/ask_the_doctor/my_questions/{{question.id}}/edit/">Edit</a></b>
 	    </div>
 	    {% endfor %}
 	    <br>

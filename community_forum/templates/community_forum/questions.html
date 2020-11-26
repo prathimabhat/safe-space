@@ -5,36 +5,66 @@
 	body{
 		background-color: #EEEEE0;
 	}
+	.up-votes{
+		font-size: 2rem;
+	}
+	.down-votes{
+		font-size: 2rem;
+	}
+	.btn{
+		background-color: none;
+		border:none;
+	}
+	.up-votes:hover{
+		color: green;
+	}
+	.down-votes:hover{
+		color: red;
+	}
+	
 
 
 </style>
 <br><br>
 
-<div class="container" style="font-weight: bolder;font-size: 2rem;">
-{% for cat in category %}
-	<p>{{cat.category_name|safe}}</p>
-	
-</div>
+
 <div class="container" style="background-color:white;">
 	<div class="row">
 	
 		
 		{% for question in question %}
-	    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+		<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+			<form action="{% url 'community_forum:up_vote' question.pk %}" method="POST">
+				{% csrf_token %}
+				<button type="submit" name="question_id_up" value="{{question.id}}" class="btn"><i class="fas fa-long-arrow-alt-up up-votes"></i></button>
+			</form>
+			&nbsp;&nbsp;&nbsp;{{question.total_upvotes}}<br><br>
+			<form action="{% url 'community_forum:down_vote' question.pk %}" method="POST">
+				{% csrf_token %}
+				<button type="submit" name="question_id_down" value="{{question.id}}" class="btn"><i class="fas fa-long-arrow-alt-down down-votes"></i></button>
+			</form>
+			&nbsp;&nbsp;&nbsp;{{question.total_downvotes}}
+			
+			
+			
+		</div>
+
+	    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
 	    	<span style="font-weight: bolder;">{{question.question_title|safe}}</span><br><br>
 	    	{{question.question_detail|safe}}<br>
 	    	<span style="color: blue;">{{question.user.user_name}}</span><br>
 	    	<span style="font-size: 0.9rem;color: grey;">{{question.date}}</span><br><br>
 
 	    </div>
+	   
 
 	    <div class="container">
-			<span style="font-weight: bold;"><a href="/community_forum/{{cat.category_name}}/questions/{{question.id}}/answer/">Answer this question!</a></span>
+			<span style="font-weight: bold;"><a href="/community_forum/questions/{{question.id}}/answer/">Answer this question!</a></span>
 		</div>
 
-		
-	    {% endfor %}
-{% endfor %}
+	
+
 
 	    <br>
 	</div>
@@ -43,7 +73,22 @@
 	<div class="row">
 	   
 	    {% for answers in answers %}
-	    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+
+	    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+			<form action="{% url 'community_forum:answer_up_vote' answers.pk question.pk %}" method="POST">
+				{% csrf_token %}
+				<button type="submit" name="answer_id_up" value="{{answers.id}}" class="btn"><i class="fas fa-long-arrow-alt-up up-votes"></i></button>
+			</form>
+			&nbsp;&nbsp;&nbsp;{{answers.total_upvotes}}<br><br>
+			<form action="{% url 'community_forum:answer_down_vote' answers.pk question.pk %}" method="POST">
+				{% csrf_token %}
+				<button type="submit" name="answer_id_down" value="{{answers.id}}" class="btn"><i class="fas fa-long-arrow-alt-down down-votes"></i></button>
+			</form>
+			&nbsp;&nbsp;&nbsp;{{answers.total_downvotes}}
+					
+		</div>
+
+	    <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 ">
 	    	<p>{{answers.answer|safe}}</p><br>
 	    	<span style="color: blue;">{{answers.user.user_name}}</span><br>
 	    	<span style="font-size: 0.9rem;color: grey;">{{answers.date}}</span><br><hr>
@@ -51,10 +96,13 @@
 
 	    
 	    {% endfor %}
-	    
+	    	
+	    {% endfor %}
 	</div>
 </div>
 
 <br>
+
+
 
 {% endblock %}

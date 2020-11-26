@@ -1,13 +1,15 @@
-from django.shortcuts import render,reverse
+from django.shortcuts import render,reverse,redirect
 from django.http import HttpResponse,HttpResponseRedirect
 from django.views import View
 from accounts.models import Therapist
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import QuestionForm
+from .forms import QuestionForm,QuestionUpdateForm
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView,DetailView,CreateView
 from .models import question_to_therapist,answers_from_therapist
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+
 class TherapistView(View,LoginRequiredMixin):
 
 	def get(self, request, *args, **kwargs):
@@ -85,3 +87,16 @@ class MyQuestions(View,LoginRequiredMixin):
 
 
 
+@login_required
+def QuestionUpdateView(request,*args,**kwargs):
+	context={}
+	question_id=kwargs['pk']
+	#answer_id=kwargs['pk_alt']
+	obj=get_object_or_404(question_to_therapist,id=question_id)
+	form=QuestionUpdateForm(request.POST or None,instance=obj)
+	if form.is_valid():
+		form.save()
+		#redirect_url=reverse('therapist_dashboard:AnswerView',args=[question_id])
+		return redirect('/ask_the_doctor/')
+	context["form"]=form
+	return render(request,'Ask_the_doctor/question_update.html',context)

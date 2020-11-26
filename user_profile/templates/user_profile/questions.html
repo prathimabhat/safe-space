@@ -14,8 +14,15 @@ body{
 		
 		{% for question in questions %}
 			<br>
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<a href="/community_forum/{{category}}/questions/{{question.id}}/">{{question.question_title}}</a><br><br>
+			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+				<strong>{{question.question_title|safe}}</strong>
+				<br><br>
+				<small>Question asked in {{question.category.category_name}}</small><br><br>
+				{{question.question_detail|safe}}<br>
+				{{question.date}}<hr>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+				<br><br><a href="/profile/my_questions/{{question.id}}/edit/">Edit question</a>
 			</div>
 			
 			{% empty %}
