@@ -10,7 +10,7 @@ from .models import question_to_therapist,answers_from_therapist
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
-class TherapistView(View,LoginRequiredMixin):
+class TherapistView(LoginRequiredMixin,View):
 
 	def get(self, request, *args, **kwargs):
 
@@ -22,7 +22,7 @@ class TherapistView(View,LoginRequiredMixin):
 
 
 
-class NewQuestionView(CreateView,LoginRequiredMixin):
+class NewQuestionView(LoginRequiredMixin,CreateView):
 	
 	model=question_to_therapist
 	form_class=QuestionForm
@@ -73,7 +73,7 @@ class NewQuestionView(CreateView,LoginRequiredMixin):
 		return render(request,'ask_the_doctor/')
 	'''
 
-class MyQuestions(View,LoginRequiredMixin):
+class MyQuestions(LoginRequiredMixin,View):
 
 	def get(self,request,*args,**kwargs):
 		question_id=kwargs['pk']
@@ -96,7 +96,7 @@ def QuestionUpdateView(request,*args,**kwargs):
 	form=QuestionUpdateForm(request.POST or None,instance=obj)
 	if form.is_valid():
 		form.save()
-		#redirect_url=reverse('therapist_dashboard:AnswerView',args=[question_id])
+		#redirect_url=reverse('therapibvst_dashboard:AnswerView',args=[question_id])
 		return redirect('/ask_the_doctor/')
 	context["form"]=form
 	return render(request,'Ask_the_doctor/question_update.html',context)

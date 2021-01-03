@@ -72,7 +72,7 @@
 
           {% if request.user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="#">Chats</a>
+              <a class="nav-link" href="/private_chats/{{request.user.username}}/">Chats</a>
             </li>
           {% else %}
             <span data-toggle="tooltip" data-placement="bottom" title="Please login first">

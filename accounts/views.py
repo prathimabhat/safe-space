@@ -36,6 +36,7 @@ def signup(request):
             user.profile.date_of_birth = form.cleaned_data.get('date_of_birth')
             user.profile.location = form.cleaned_data.get('location')
             user.profile.reason = form.cleaned_data.get('reason')
+            user.profile.superuser=False
             user.profile.save()
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
@@ -75,6 +76,7 @@ def therapist_signup(request):
 
 
 def login_request(request):
+    
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
         if form.is_valid():
@@ -82,9 +84,13 @@ def login_request(request):
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
+
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}")
-                return redirect('home')
+                if user.is_normal_user==True:
+                    return redirect('home')
+                else:
+                    return redirect('therapist_dashboard:profile')
             else:
                 messages.error(request, "Invalid username or password.")
         else:

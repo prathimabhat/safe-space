@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from community_forum.models import Questions,Answers
 from .forms import QuestionUpdateForm,AnswerUpdateForm
 
-class ProfileView(View,LoginRequiredMixin):
+class ProfileView(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
 
         user_=self.request.user
@@ -17,7 +17,7 @@ class ProfileView(View,LoginRequiredMixin):
         }
         return render(request,'user_profile/profile.html',context)
 
-class MyQuestionsView(View,LoginRequiredMixin):
+class MyQuestionsView(LoginRequiredMixin,View):
 	def get(self,request,*args,**kwargs):
 		questions=Questions.objects.filter(user=self.request.user.profile)
 		context={
@@ -25,7 +25,7 @@ class MyQuestionsView(View,LoginRequiredMixin):
 		}
 		return render(request,'user_profile/questions.html',context)
 
-class MyAnswersView(View,LoginRequiredMixin):
+class MyAnswersView(LoginRequiredMixin,View):
 	def get(self,request,*args,**kwargs):
 
 		answers=Answers.objects.filter(user=self.request.user.profile)

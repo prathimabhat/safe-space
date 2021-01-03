@@ -23,4 +23,5 @@ urlpatterns = [
     path('community_forum/',include('community_forum.urls')),
     path('profile/',include('user_profile.urls')),
     path('therapist_dashboard/',include('therapist_dashboard.urls')),
+    path('private_chats/',include('private_chats.urls')),
 ]

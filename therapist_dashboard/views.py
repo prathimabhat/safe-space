@@ -13,7 +13,7 @@ from .forms import AnswerForm,AnswerUpdateForm
 #class DemoView(GroupRequiredMixin, View):
   #group_required = [u'therapists']
 
-class ProfileView(View,LoginRequiredMixin):
+class ProfileView(LoginRequiredMixin,View):
 	def get(self, request, *args, **kwargs):
 
 		user_=self.request.user
@@ -23,7 +23,7 @@ class ProfileView(View,LoginRequiredMixin):
 		}
 		return render(request,'therapist_dashboard/profile.html',context)
 
-class PatientsView(View,LoginRequiredMixin):
+class PatientsView(LoginRequiredMixin,View):
 	def get(self,request,*args,**kwargs):
 		patients=Patients.objects.filter(therapist=self.request.user.therapist)
 		context={
@@ -31,7 +31,7 @@ class PatientsView(View,LoginRequiredMixin):
 		}
 		return render(request,'therapist_dashboard/patients.html',context)
 
-class QuestionView(View,LoginRequiredMixin):
+class QuestionView(LoginRequiredMixin,View):
 
 	def get(self,request,*args,**kwargs):
 		question=question_to_therapist.objects.filter(therapist=self.request.user.therapist)
@@ -42,7 +42,7 @@ class QuestionView(View,LoginRequiredMixin):
 		}
 		return render(request,'therapist_dashboard/questions.html',context)
 
-class AnswerView(View,LoginRequiredMixin):
+class AnswerView(LoginRequiredMixin,View):
 
 	def get(self,request,*args,**kwargs):
 		question_id=kwargs['pk']

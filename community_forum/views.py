@@ -22,6 +22,9 @@ class CategoryView(View):
 			'categories':categories
 		}
 		return render(request,'community_forum/categories.html',context)
+def QuizView(request,*args,**kwargs):
+	context={}
+	return render(request,'community_forum/quiz.html',context)
 
 def SubforumView(request,*args,**kwargs):
 	category=kwargs['category']
@@ -51,7 +54,7 @@ class QuestionView(View):
 		return render(request,'community_forum/questions.html',context)
 
 
-class AnswerView(CreateView,LoginRequiredMixin):
+class AnswerView(LoginRequiredMixin,CreateView):
 
 	model=Answers
 	form_class=AnswerForm
@@ -71,7 +74,7 @@ class AnswerView(CreateView,LoginRequiredMixin):
 		#return self.render_to_response(self.get_context_data(form=form))
 		
 
-class NewQuestionView(CreateView,LoginRequiredMixin):
+class NewQuestionView(LoginRequiredMixin,CreateView):
 
 	model=Questions
 	form_class=QuestionForm
@@ -107,4 +110,5 @@ def AnswerDownVoteView(request,*args,**kwargs):
 	answer=get_object_or_404(Answers,id=request.POST.get('answer_id_down'))
 	answer.down_votes.add(request.user.profile)
 	return HttpResponseRedirect(reverse('community_forum:question-detail',args=[int(kwargs['pk_alt'])]))
+
 

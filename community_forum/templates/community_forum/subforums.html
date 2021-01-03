@@ -30,11 +30,25 @@
 <div class="container cats">
 	<br>
 	<div class="row">
+		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 offset-lg-8">
+			<b>Up votes</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Down votes</b>
+		</div>
 		
+	</div>
+	<div class="row">
 		{% for question in category_questions %}
 			<br>
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+			<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 				<a href="/community_forum/questions/{{question.id}}/">{{question.question_title}}</a><br><br>
+			</div>
+			
+			<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+				
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{question.total_upvotes}}
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+				{{question.total_downvotes}}
 			</div>
 			
 			{% empty %}

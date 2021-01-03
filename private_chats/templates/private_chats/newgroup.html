@@ -1,0 +1,40 @@
+{% extends 'Ask_the_doctor/base.html' %}
+{% block content %}
+
+<style type="text/css">
+	body{
+		background-color:  #EEEEE0;
+	}
+	#NameForm{
+		display: block;
+	}
+	#AddForm{
+		display: none;
+	}
+</style>
+
+<br><br>
+<div class="container" style="background-color: white;" id="NameForm">
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-xs-12 offset-lg-4">
+			<br><br>
+			<div class="form-group">
+				<form method="POST">
+					{% csrf_token %}
+					Group name: <br><br>{{form.name}}
+					<br>
+					<p>Add members</p>
+					{{form.members}}<br>
+					<p>Hold down “Control”, or “Command” on a Mac, to select more than one.</p>
+					<br>
+					<button type="submit" class="btn btn-primary">Create</button>
+				</form>
+		</div>
+
+
+
+
+	
+
+{% endblock %}
+

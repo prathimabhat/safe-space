@@ -38,11 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ckeditor',
+    'encrypted_model_fields',
     'accounts',
     'Ask_the_doctor',
     'community_forum',
     'user_profile',
     'therapist_dashboard',
+    'private_chats',
+  
 ]
 
 MIDDLEWARE = [
@@ -110,8 +113,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = 'example@gmail.com' #replace by original email id and pass word
-EMAIL_HOST_PASSWORD = 'password'
+EMAIL_HOST_USER = 'prathimabhatm01@gmail.com' #replace by original email id and pass word
+EMAIL_HOST_PASSWORD = 'Tommy_shyboy2020'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL=False
@@ -139,3 +142,21 @@ MEDIA_URL = '/images/'
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR,'accounts/static')
 ]
+
+ASGI_APPLICATION="safe_space.routing.application" #for django channels
+
+CHANNEL_LAYERS={
+    "default":{
+        "BACKEND":"channels.layers.InMemoryChannelLayer"
+    }
+}
+
+'''CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+'''

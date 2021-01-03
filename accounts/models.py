@@ -25,12 +25,12 @@ class Profile(models.Model):
     location = models.CharField(max_length=30, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     date_of_joining=models.DateTimeField(auto_now_add=True)
-
+    superuser=models.BooleanField(default=True)
     objects=CustomUserManager()
     
 
     def __str__(self):
-    	return f"{self.id}"
+    	return f"{self.user_name}"
 
 
 
