@@ -7,9 +7,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from .forms import AnswerForm,QuestionForm
-from community_forum.models import Questions,Answers,Comments
+from community_forum.models import Questions,Answers
 from django.urls import reverse
-
+from django.core.mail import send_mail,EmailMultiAlternatives
+from django.conf import settings
+from django.template.loader import get_template
 
 
 # Create your views here.
@@ -70,6 +72,15 @@ class AnswerView(LoginRequiredMixin,CreateView):
 		obj.category=category_
 		obj.question=question_
 		obj.save()
+		subject='New message'
+		from_email=settings.EMAIL_HOST_USER
+		to_email=obj.user.email_id
+		text_content="Hi, somebody answered your question.Login to see!"
+		html_content=get_template("community_forum/answered_email.html").render()
+		msg= EmailMultiAlternatives(subject,text_content,from_email,[to_email])
+		msg.attach_alternative(html_content, "text/html")
+		msg.send()
+
 		return super().form_valid(form)
 		#return self.render_to_response(self.get_context_data(form=form))
 		
@@ -111,4 +122,11 @@ def AnswerDownVoteView(request,*args,**kwargs):
 	answer.down_votes.add(request.user.profile)
 	return HttpResponseRedirect(reverse('community_forum:question-detail',args=[int(kwargs['pk_alt'])]))
 
+
+def CategoryInfo(request,*args,**kwargs):
+	category=get_object_or_404(Categories,id=kwargs['pk'])
+	context={
+		'category':category
+	}
+	return render(request,'community_forum/info.html',context)
 

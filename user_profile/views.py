@@ -61,3 +61,18 @@ def AnswerUpdateView(request,*args,**kwargs):
 		return redirect('/profile/my_answers/')
 	context["form"]=form
 	return render(request,'user_profile/answer_update.html',context)
+
+@login_required
+def QuestionDeleteView(request,pk):
+	obj=get_object_or_404(Questions,id=pk)
+	if request.method=='POST':
+		obj.delete()
+		return redirect('/profile/my_questions/')
+	return render(request,'user_profile/delete_question.html')
+
+def AnswerDeleteView(request,pk):
+	obj=get_object_or_404(Answers,id=pk)
+	if request.method=='POST':
+		obj.delete()
+		return redirect('/profile/my_answers/')
+	return render(request,'user_profile/delete_answer.html')

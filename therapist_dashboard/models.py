@@ -1,7 +1,7 @@
 from django.db import models
 from accounts.models import Profile,Therapist
 # Create your models here.
-class Patients(models.Model):
+'''class Patients(models.Model):
 	class Meta:
 		verbose_name_plural='Patients'
 
@@ -27,4 +27,4 @@ class Patients(models.Model):
 
 	def __str__(self):
 		return f"{self.id} -{self.name}"
-
+'''

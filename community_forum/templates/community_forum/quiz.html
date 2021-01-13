@@ -415,17 +415,17 @@ legal troubles; getting into arguments or fights?</b></p>
 		document.getElementById('results').innerHTML="<b>We recommend you the following forums to ask your questions in: </b><br>"
 
 		if(PHQ9_score>=10){
-			document.getElementById('results').innerHTML+="<a href='/community_forum/Depression forum/'>Depression forum</a>"
+			document.getElementById('results').innerHTML+="<a href='/community_forum/Depression Forum/'>Depression Forum</a>"
 		}
 		if(GAD_score>=10){
-			document.getElementById('results').innerHTML+="<br><a href='/community_forum/Anxiety forum'>Anxiety forum</a>"
+			document.getElementById('results').innerHTML+="<br><a href='/community_forum/Anxiety Forum'>Anxiety Forum</a><br>"
 
 		}
 		if(PAN_score>=1){
-			document.getElementById('results').innerHTML+="<br><a href='/community_forum/Panic attack forum/'>Panic attack Forum</a>"
+			document.getElementById('results').innerHTML+="If you are having frequent panic attacks please consult a qualified professional."
 		}
 		if(BIP_score>7 && parseInt(theform.BIP_b.value)==1 && parseInt(theform.BIP_c.value)>=2){
-			document.getElementById('results').innerHTML+="<br><a href='/community_forum/Bipolar disorder forum/'>Bipolar Spectrum Disorder Forum</a>"
+			document.getElementById('results').innerHTML+="<br><a href='/community_forum/Bipolar mood disorder Forum/'>Bipolar Spectrum Disorder Forum</a>"
 		}
 
 		if(parseInt(theform.PHQ_9_9.value)>0)

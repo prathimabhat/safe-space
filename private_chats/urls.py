@@ -9,7 +9,9 @@ urlpatterns = [
 	path('<str:username>/chat/new/<str:room_name>/',views.room,name="room"),	
 	path('<str:username>/create_group/',views.create_group,name="creategroup"),
 	path('<str:username>/groupchat/<int:pk>/',views.GroupView,name="groupchat"),
-	path('<int:pk>/chat/<int:pk_alt>/',views.PrivateChatView,name="private")
+	path('<int:pk>/chat/<int:pk_alt>/',views.PrivateChatView,name="private"),
+	path('members/',views.MembersView,name="members"),
+	path('group_details/<int:pk>/',views.group_details,name="groupdetails")
 ]
 '''
 from django.urls import path

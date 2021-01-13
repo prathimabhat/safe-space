@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'user_profile',
     'therapist_dashboard',
     'private_chats',
+    'ckeditor_uploader',
   
 ]
 
@@ -113,8 +114,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = '' #replace by original email id and pass word
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'example@gmail.com' #replace by original email id and pass word
+EMAIL_HOST_PASSWORD = 'examplepassword'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL=False
@@ -132,13 +133,35 @@ USE_L10N = True
 
 USE_TZ = True
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        
+        'height':200,
+        'width':700,
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+           
+            ['Bold', 'Italic', 'Underline','Strike', 'SpellChecker'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat'],
+            ["Image", "Table", "Link", "Unlink", "Anchor", "SectionLink", "Subscript", "Superscript"],
+            ['Undo', 'Redo'],
+           
+            ['Smiley','Insert Special Character'],
+            
+
+        ]
+       
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
-
+CKEDITOR_UPLOAD_PATH = "uploads/"
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR,'accounts/static')
 ]

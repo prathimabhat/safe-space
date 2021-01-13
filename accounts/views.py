@@ -10,9 +10,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from therapist_dashboard.views import ProfileView
 from .models import Therapist
+
 #from .decorators import allowed_users,unauthenticated_users
 
-@login_required
+
 #@allowed_users(allowed_roles=['forum_users','Admin users'])
 def home(request):
     return render(request, 'accounts/home.html')

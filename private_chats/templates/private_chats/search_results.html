@@ -75,8 +75,7 @@
 								{% if users.id is not request.user.profile.id %}
 								<a href="/private_chats/{{user.id}}/chat/{{users.id}}/">{{users.user_name}}</a>
 								{% endif %}
-								{% empty %}
-									<p>No match</p>
+								
 									
 							</div>
 

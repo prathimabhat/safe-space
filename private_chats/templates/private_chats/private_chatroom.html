@@ -34,7 +34,9 @@
 	a.conts:hover{
 		color:blue !important;
 
+
 	}
+	
 </style>
 <br><br>
 <div class="container">
@@ -44,16 +46,20 @@
 			 1px 0px 1px 1px;">
 				<br><br>
 				{% for contact in contacts %}
+					{% if contact not in msgs_received%}
 					{%ifchanged contact.msg_receiver%}
 					<a class="conts" href="/private_chats/{{contact.msg_sender.id}}/chat/{{contact.msg_receiver.id}}/"><p>{{contact.msg_receiver.user_name}}</p>
 						<hr></a>
 					{%endifchanged%}
+					{%endif%}
 
 				{% endfor %}
 				{% for mesg in msgs_received %}
 				{%ifchanged mesg.msg_receiver%}
+				
 				<a class="conts" href="/private_chats/{{user.id}}/chat/{{mesg.msg_sender.id}}/"><p>
 				{{mesg.msg_sender.user_name}}</p></a><hr>
+				
 				{% endifchanged %}
 			{% endfor %}
 
@@ -66,8 +72,8 @@
 					{% endif %}
 					
 				{% endfor %}
+		
 			</div>
-			
 			<div class="col-lg-6 col-md-6 col-xs-12 offset-lg-6" id="Box">
 				
 				<div class="col-lg-6 col-md-6 col-xs-12 offset-lg-4">

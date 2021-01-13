@@ -67,9 +67,33 @@ def search_results(request,*args,**kwargs):
 #['username'])
       
 @login_required
+def MembersView(request,*args,**kwargs):
+    ctx = {}
+    url_parameter = request.GET.get("q")
+
+    if url_parameter:
+        members = Profile.objects.filter(user_name__icontains=url_parameter)
+    else:
+        members = Profile.objects.all()
+
+    ctx["members"] = members
+    if request.is_ajax():
+        html = render_to_string(
+        template_name="members-results-partial.html", 
+        context={"members": members}
+        )
+
+        data_dict = {"html_from_view": html}
+
+        return JsonResponse(data=data_dict, safe=False)
+
+    return render(request, "private_chats/newgroup.html", context=ctx)
+
+@login_required
 def create_group(request,*args,**kwargs):
     form=NewGroupForm
     if request.method=='POST':
+
         form=NewGroupForm(request.POST)
         if form.is_valid():
             admin_=get_object_or_404(Profile,id=request.user.profile.id)
@@ -87,10 +111,7 @@ def create_group(request,*args,**kwargs):
     context={
         'form':form
     }
-
-    
         
-
     return render(request,'private_chats/newgroup.html',context)
 
 @login_required
@@ -111,6 +132,9 @@ def GroupView(request,*args,**kwargs):
             grp_msg.sender=get_object_or_404(Profile,id=request.user.profile.id)
             grp_msg.grouproom=get_object_or_404(Group,id=kwargs['pk'])
             grp_msg.save()
+            subject='New message'
+            
+
         else:
             form=GrpForm()
     else:
@@ -177,6 +201,17 @@ def PrivateChatView(request,*args,**kwargs):
     }
 
     return render(request,"private_chats/personal_chat.html",context)
+
+@login_required
+def group_details(request,*args,**kwargs):
+    group=get_object_or_404(Group,id=kwargs['pk'])
+    context={
+        'group':group
+    }
+    return render(request,'private_chats/group_details.html',context)
+
+
+
 '''
 
 from django.shortcuts import render, redirect

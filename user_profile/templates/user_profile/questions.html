@@ -14,7 +14,7 @@ body{
 		
 		{% for question in questions %}
 			<br>
-			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+			<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 				<strong>{{question.question_title|safe}}</strong>
 				<br><br>
 				<small>Question asked in {{question.category.category_name}}</small><br><br>
@@ -24,10 +24,13 @@ body{
 			<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 				<br><br><a href="/profile/my_questions/{{question.id}}/edit/">Edit question</a>
 			</div>
+			<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+				<br><br><a href="/profile/my_questions/{{question.id}}/delete/"><i class="fa fa-trash"></i></a>
+			</div>
 			
 			{% empty %}
 			<div class="container" style="text-align: center;">
-				<p>Sorry! There are no questions in this forum</p>
+				<p>You have not asked any questions</p>
 			</div>
 
 		{% endfor %}

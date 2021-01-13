@@ -1,4 +1,4 @@
-{% extends 'ask_the_doctor/base.html' %}
+{% extends 'Ask_the_doctor/base.html' %}
 {% block content %}
 
 <style type="text/css">
@@ -37,10 +37,11 @@
 	}
 </style>
 <br><br>
+
 	<div class="container" style="background-color: white;">
 		<div class="row">
-			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 outer-box">
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 inner-box">
+			<br>
+				<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 inner-box">
 					<div class="form-group">
 						<form method="POST">
 							<p>
@@ -67,23 +68,23 @@
 						</form>
 					</div>
 				</div>
-			</div>
-		</div>
-		<br><br>
+		
+		
+		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 		Your other questions <br><br>
-		<div class="row">
-			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+	
+			
 				{% for questions in questions %}
 				
                 <a href="/ask_the_doctor/my_questions/{{questions.id}}" class="card-title flip">{{questions.question|safe}}</a>
                 
     	
 				{% endfor %}
-			</div>
 		</div>
-	
-	
-</div>
+		</div>
+		</div>
+		
+
 
 <!--<script>
 function flipFunction() {

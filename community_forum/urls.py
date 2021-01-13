@@ -6,6 +6,7 @@ urlpatterns=[
 	path('',views.CategoryView.as_view()),
 	path('quiz/',views.QuizView,name="quiz"),
 	path('<str:category>/',views.SubforumView,name="subforum"),
+	path('<int:pk>/info/',views.CategoryInfo,name="categoryInfo"),
 	path('<str:category>/questions/new/',views.NewQuestionView.as_view()),
 	path('questions/<int:pk>/',views.QuestionView.as_view(),name="question-detail"),
 	path('questions/<int:pk>/answer/',views.AnswerView.as_view(),name="answer-detail"),

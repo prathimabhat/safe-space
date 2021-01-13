@@ -34,14 +34,23 @@
 		padding-left: 1rem;
 
 	}
+	 div.scroll { 
+                margin:4px, 4px; 
+                padding:4px; 
+                
+                width: 500px; 
+                height: 110px; 
+                overflow-x: hidden; 
+                overflow-y: auto; 
+                text-align:justify; 
+            } 
+
 </style>
 <br><br>
 
 <div class="container">
-	<div class="form-group">
-	<form method="POST">
 		<div class="row" >
-			<div class="col-lg-4 col-md-4 col-xs-12">
+			<div class="col-lg-4 col-md-4 col-xs-12 scroll" style="background-color: white;">
 				{% for contact in contacts %}
 					{%ifchanged contact.msg_receiver%}
 					<a class="conts" href="/private_chats/{{contact.msg_sender.id}}/chat/{{contact.msg_receiver.id}}/"><p>{{contact.msg_receiver.user_name}}</p>
@@ -66,35 +75,41 @@
 				{% endfor %}
 			</div>
 
-			<div class="col-lg-8 col-,d-8 col-xs-12" style="background-color:white; "><br><br>
-				<p class="grpName">{{this_group.name}}</p><br><br>
-					
-					<div class="col-lg-6 col-md-6 col-xs-12 ">
-						<br>
-					{% for txt_ in texts %}
-						{% if txt_ not in texts_sent_by_me %}
-						<span class="textBlobs"style="background-color:	#fffec8;">	{{txt_.content}}</span><br>
-						{% endif %}
-					
-					{% endfor %}
-					</div>
-					<div class="col-lg-6 col-md-6 col-xs-12 offset-lg-6 " >
-						<br>
-					{% for txt in texts_sent_by_me %}
-						<span class="textBlobs" style="background-color: #F0FFFF;text-align: right;">{{txt.content}}</span><br>
-					{% endfor %}
+			<div class="col-lg-8 col-md-8 col-xs-12 "><br><br>
+				<a href="/private_chats/group_details/{{this_group.id}}/"><p class="grpName">{{this_group.name}}</p></a><br><br>
+					<div class="scroll">
+						<div class="col-lg-6 col-md-6 col-xs-12 ">
+							<br>
+						{% for txt_ in texts %}
+							{% if txt_ not in texts_sent_by_me %}
+
+							<span class="textBlobs"style="background-color:	#fffec8;">	<span style="color: blue;"><small>{{txt_.sender}}</small></span><br>{{txt_.content}}</span><br>
+							{% endif %}
+						
+						{% endfor %}
+						</div>
+						<div class="col-lg-6 col-md-6 col-xs-12 offset-lg-6 " >
+							<br>
+						{% for txt in texts_sent_by_me %}
+							
+							<span class="textBlobs" style="background-color: #F0FFFF;text-align: right;"><span style="color: blue;"><small>{{txt.sender}}</small></span><br>{{txt.content}}</span><br>
+							
+						{% endfor %}
+						</div>
 					</div>
 			</div>
 
+		</div>
 
-
-
-
-
+</div>
+<div class="container" style="position: fixed;bottom: 0%;right: 3%;">
+	<div class="form-group">
+	<form method="POST">
+		<div class="row" >
 			<div class="col-lg-6 col-md-6 col-xs-6 offset-lg-4 "style="background-color: white;box-shadow: 2px 2px 2px;">
 				<br>
 				{% csrf_token %}
-				 {{form.content}}
+				{{form.content}}
 			</div>
 			<div class="col-lg-2 col-md-2 col-xs-2"style="background-color: white;box-shadow: 2px 2px 2px;">
 				<br>
@@ -106,5 +121,7 @@
 
 	</form>
 </div>	
+</div>
+
 
 {% endblock %}

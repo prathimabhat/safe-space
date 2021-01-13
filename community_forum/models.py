@@ -84,7 +84,7 @@ class Answers(models.Model):
 		return f"{self.id}"
 '''
 
-class Comments(models.Model):
+'''class Comments(models.Model):
 	class Meta:
 		verbose_name_plural="Comments"
 
@@ -96,6 +96,6 @@ class Comments(models.Model):
 
 	def __str__(self):
 		return f"{self.id}"
-
+'''
 
 

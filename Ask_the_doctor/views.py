@@ -9,7 +9,39 @@ from django.views.generic import ListView,DetailView,CreateView
 from .models import question_to_therapist,answers_from_therapist
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+#from .forms import PatientForm
+from django.core.mail import send_mail,EmailMultiAlternatives
+from django.conf import settings
+from django.template.loader import get_template
 
+from community_forum.models import Questions
+
+'''
+@login_required
+def PatientRegistrationView(request,*args,**kwargs):
+	form=PatientForm
+	if request.method=='POST':
+		form=PatientForm(request.POST)
+		if form.is_valid():
+			user_=get_object_or_404(Profile,id=request.user.profile.id)
+			therapist_= get_object_or_404(Therapist, pk=kwargs['pk'])
+			patient=form.save(commit=False)
+			patient.user=user_
+			patient.therapist=therapist_
+			patient.save()
+			form.save_m2m()
+			return redirect("Ask_the_doctor:ask",id=therapist_.id)
+		else:
+			form=PatientForm()
+	else:
+		form=PatientForm()
+
+	context={
+	'form':form
+	}
+    
+	return render(request,'Ask_the_doctor/patientform.html',context)
+'''
 class TherapistView(LoginRequiredMixin,View):
 
 	def get(self, request, *args, **kwargs):
@@ -39,6 +71,15 @@ class NewQuestionView(LoginRequiredMixin,CreateView):
 		obj.user=self.request.user.profile
 		obj.therapist=therapist_
 		obj.save()
+		subject='New message'
+		from_email=settings.EMAIL_HOST_USER
+		to_email=therapist_.therapist_email
+		text_content="Hi, you have a new message!"
+		html_content=get_template("private_chats/msg_received_email.html").render()
+		msg= EmailMultiAlternatives(subject,text_content,from_email,[to_email])
+		msg.attach_alternative(html_content, "text/html")
+		msg.send()
+
 		#return self.render_to_response(self.form_valid(form))
 		return self.render_to_response(self.get_context_data(form=form))
 		#return super().form_valid(form)
@@ -100,3 +141,23 @@ def QuestionUpdateView(request,*args,**kwargs):
 		return redirect('/ask_the_doctor/')
 	context["form"]=form
 	return render(request,'Ask_the_doctor/question_update.html',context)
+
+'''
+@login_required
+def search_bar(request,*args,**kwargs):
+	
+    if request.method=='GET':
+           
+        search_query = request.GET.get('to', None)
+        if search_query:
+            question_list = Questions.objects.filter(title__icontains=search_query)
+
+   
+            context={   
+            
+            'question_list':question_list
+           
+            }
+        
+    return render(request, "Ask_the_doctor/base.html",context)
+'''

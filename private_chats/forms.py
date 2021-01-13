@@ -19,7 +19,7 @@ class NewGroupForm(forms.ModelForm):
 		'class':'form-control',
 		'placeholder':'Give a name to your group'
 		}))
-	members=forms.ModelMultipleChoiceField(queryset=Profile.objects.filter(superuser=False))
+	members=forms.ModelMultipleChoiceField(queryset=Profile.objects.filter(superuser=False),widget=forms.CheckboxSelectMultiple,required=True)
 	class Meta:
 		model=Group
 		fields=['name','members']

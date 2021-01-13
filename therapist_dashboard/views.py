@@ -5,56 +5,58 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404,HttpResponseRedirect
 from accounts.models import Therapist
-from .models import Patients
+#from .models import Patients
 from Ask_the_doctor.models import question_to_therapist,answers_from_therapist
 from django.views.generic import CreateView
 from .forms import AnswerForm,AnswerUpdateForm
-
+from accounts.decorators import therapist_login_required
 #class DemoView(GroupRequiredMixin, View):
   #group_required = [u'therapists']
+@therapist_login_required
+def ProfileView(request, *args, **kwargs):
+	
 
-class ProfileView(LoginRequiredMixin,View):
-	def get(self, request, *args, **kwargs):
+	user_=request.user
+	user=get_object_or_404(Therapist,user=user_)
+	context={
+	    'user':user
+	}
+	return render(request,'therapist_dashboard/profile.html',context)
 
-		user_=self.request.user
-		user=get_object_or_404(Therapist,user=user_)
-		context={
-		    'user':user
-		}
-		return render(request,'therapist_dashboard/profile.html',context)
-
-class PatientsView(LoginRequiredMixin,View):
+'''class PatientsView(LoginRequiredMixin,View):
 	def get(self,request,*args,**kwargs):
 		patients=Patients.objects.filter(therapist=self.request.user.therapist)
 		context={
 			'patients':patients
 		}
 		return render(request,'therapist_dashboard/patients.html',context)
+'''
+@therapist_login_required
+def QuestionView(request,*args,**kwargs):
 
-class QuestionView(LoginRequiredMixin,View):
 
-	def get(self,request,*args,**kwargs):
-		question=question_to_therapist.objects.filter(therapist=self.request.user.therapist)
+	question=question_to_therapist.objects.filter(therapist=request.user.therapist).order_by('-date')
 
-		context={
-			'question':question,
-			
-		}
-		return render(request,'therapist_dashboard/questions.html',context)
+	context={
+		'question':question,
+		
+	}
+	return render(request,'therapist_dashboard/questions.html',context)
 
-class AnswerView(LoginRequiredMixin,View):
+@therapist_login_required
+def AnswerView(request,*args,**kwargs):
 
-	def get(self,request,*args,**kwargs):
-		question_id=kwargs['pk']
-		question=get_object_or_404(question_to_therapist,id=question_id)
-		answers=answers_from_therapist.objects.filter(question=question_id)
+	
+	question_id=kwargs['pk']
+	question=get_object_or_404(question_to_therapist,id=question_id)
+	answers=answers_from_therapist.objects.filter(question=question_id).order_by('-date')
 
-		context={
-			'question':question,
-			'answers':answers,
-			
-		}
-		return render(request,'therapist_dashboard/answers.html',context)
+	context={
+		'question':question,
+		'answers':answers,
+		
+	}
+	return render(request,'therapist_dashboard/answers.html',context)
 
 '''class NewAnswerView(CreateView,LoginRequiredMixin):
 
@@ -72,7 +74,8 @@ class AnswerView(LoginRequiredMixin,View):
 		obj.save()
 		return super().form_valid(form)
 '''
-@login_required
+@therapist_login_required
+
 def NewAnswerView(request,*args,**kwargs):
 	form=AnswerForm
 	if request.method == 'POST':
@@ -87,13 +90,13 @@ def NewAnswerView(request,*args,**kwargs):
 			answer.question=question_
 
 			answer.save()
-			return redirect('therapist_dashboard/questions/')
+			return redirect('/therapist_dashboard/questions/')
 		else:
 			form = AnswerForm()
 	return render(request, 'therapist_dashboard/answers_from_therapist_form.html', {'form': form})
 
 
-@login_required
+@therapist_login_required
 def AnswerUpdateView(request,*args,**kwargs):
 	context={}
 	question_id=kwargs['pk']
